@@ -1,12 +1,15 @@
 /* 
     Auth routes
     host + /api/auth
+    db_user: mern_user
+    db_password: WHQjEGhwoCbXfEXG
 */
 
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { fieldValidate } = require('../middlewares/field-validator')
-const { createUser, loginUser, revalidateToken } = require('../controllers/auth')
+const { createUser, loginUser, revalidateToken } = require('../controllers/auth');
+const { validateJWT } = require('../middlewares/jwt-validator');
 
 const router = Router();
 
@@ -30,6 +33,6 @@ router.post(
     ],
     loginUser);
 
-router.get('/renew', revalidateToken);
+router.get('/renew', validateJWT ,revalidateToken);
 
 module.exports = router
